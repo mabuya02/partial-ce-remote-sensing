@@ -216,3 +216,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# macOS / editor files
+.DS_Store
+.vscode/
+
+# Local virtual environments
+.venv/
+venv/
+
+# Project data and training artifacts
+data/raw/
+data/processed/
+outputs/
+*.pt
+*.pth

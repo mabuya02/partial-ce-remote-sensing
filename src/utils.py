@@ -1,7 +1,7 @@
 import torch
 
 
-def sample_point_labels(mask, ratio=0.01, ignore_index=5):
+def sample_point_labels(mask, ratio=0.01, ignore_index=255):
     """
     Randomly sample sparse point labels from a full segmentation mask.
 

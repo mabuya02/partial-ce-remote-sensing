@@ -1,8 +1,7 @@
-import torch
 import torch.nn.functional as F
 
 
-def partial_cross_entropy_loss(logits, targets, point_mask):
+def partial_cross_entropy_loss(logits, targets, point_mask, ignore_index=255):
     """
     Partial cross entropy loss for point-supervised segmentation.
 
@@ -14,7 +13,12 @@ def partial_cross_entropy_loss(logits, targets, point_mask):
     Returns:
         Scalar loss computed only on labeled pixels.
     """
-    pixel_loss = F.cross_entropy(logits, targets, reduction="none")
+    pixel_loss = F.cross_entropy(
+        logits,
+        targets,
+        ignore_index=ignore_index,
+        reduction="none",
+    )
 
     masked_loss = pixel_loss * point_mask
 

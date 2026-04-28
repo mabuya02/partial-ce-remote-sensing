@@ -16,7 +16,15 @@ The segmentation network is DeepLabV3 with a ResNet-50 backbone. The improved im
 
 ## Dataset
 
-The experiment uses a remote-sensing semantic segmentation dataset of aerial imagery. The classes used for training and evaluation are:
+The experiments use the Semantic Segmentation of Aerial Imagery dataset, available on Kaggle:
+
+https://www.kaggle.com/datasets/humansintheloop/semantic-segmentation-of-aerial-imagery
+
+This dataset contains high-resolution aerial images together with pixel-level segmentation masks. The images represent urban and semi-urban scenes captured from above, so they include structures and surfaces that are important in remote-sensing analysis such as buildings, roads, land, vegetation, and water. In the original dataset, the masks are stored as color-coded RGB images, where each color corresponds to one semantic class.
+
+According to the Kaggle description, the dataset was published by Humans in the Loop as part of a joint project with the Mohammed Bin Rashid Space Center (MBRSC) in Dubai, UAE. The imagery comes from Dubai aerial and satellite scenes, and the annotations were produced as pixel-wise semantic segmentation masks. Kaggle also notes that the segmentation work was carried out by trainees from the Roia Foundation in Syria.
+
+For this project, the full masks were used in two ways. First, they were used to simulate sparse point supervision by sampling only a small number of labeled pixels from each image. Second, they were used as ground truth during validation so that the point-supervised model could be compared fairly against a full-supervision baseline. The classes used for training and evaluation are:
 
 | Class id | Class |
 | --- | --- |
@@ -26,7 +34,18 @@ The experiment uses a remote-sensing semantic segmentation dataset of aerial ima
 | 3 | Vegetation |
 | 4 | Water |
 
-The original unlabeled class and unknown mask colors are ignored.
+The original mask annotations use the following color codes:
+
+| Class | Color |
+| --- | --- |
+| Building | `#3C1098` |
+| Land (unpaved area) | `#8429F6` |
+| Road | `#6EC1E4` |
+| Vegetation | `#FEDD3A` |
+| Water | `#E2A929` |
+| Unlabeled | `#9B9B9B` |
+
+The original unlabeled class and any unknown mask colors are mapped to `ignore_index=255`, so they do not contribute to the loss or evaluation metrics.
 
 ## Experiment 1: Effect of Point Label Density
 
